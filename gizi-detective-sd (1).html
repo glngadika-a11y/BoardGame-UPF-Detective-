@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Detektif Gizi Cilik</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b2d5a;--card:#fffdf5;--soft:#fff3d6;--b:#3b82f6;--y:#fbbf24;--g:#22c55e;--r:#f43f5e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#f5f3ff;--card:#3a3a78;--soft:#4a4a8c}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:'Fredoka','Trebuchet MS','Comic Sans MS',system-ui,sans-serif;color:var(--ink);min-height:100vh;
+background:linear-gradient(#7dd3fc,#bae6fd 45%,#bbf7d0);background-attachment:fixed;overflow-x:hidden}
+.deco{position:fixed;font-size:42px;opacity:.7;animation:fl 6s ease-in-out infinite;pointer-events:none}
+@keyframes fl{50%{transform:translateY(-14px) rotate(6deg)}}
+header{text-align:center;padding:10px 8px 0}
+h1{margin:0;font-size:clamp(1.6rem,5vw,2.6rem);color:#fff;text-shadow:0 4px 0 #1d4ed8,0 6px 8px #0004;letter-spacing:1px}
+header p{margin:2px 0 0;font-weight:600}
+main{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(270px,1fr);gap:14px;padding:12px;max-width:1200px;margin:auto}
+@media(max-width:820px){main{grid-template-columns:1fr}}
+.board{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,1fr);gap:8px;padding:14px;border-radius:28px;border:6px solid #a16207;aspect-ratio:7/5;position:relative;
+background:radial-gradient(circle at 20% 30%,#86efac 0 18%,transparent 19%),radial-gradient(circle at 80% 70%,#6ee7b7 0 20%,transparent 21%),#a7f3d0;box-shadow:0 8px 0 #854d0e,0 14px 20px #0003}
+.t{width:80%;aspect-ratio:1;place-self:center;z-index:1;border-radius:50%;border:4px solid #fff;display:flex;align-items:center;justify-content:center;font-size:clamp(16px,3.8vw,34px);position:relative;color:#fff;box-shadow:0 4px 0 #0003;font-weight:700;text-align:center;line-height:1}
+.t.i{background:var(--b)}.t.p{background:var(--y)}.t.m{background:var(--g)}.t.r{background:var(--r)}
+.t.s{background:#7c3aed;font-size:clamp(9px,2vw,15px)}.t.f{background:#f59e0b;font-size:clamp(9px,2vw,15px)}
+.t small{position:absolute;top:-2px;left:-2px;font-size:10px;background:#fff;color:#444;border-radius:8px;padding:0 4px}
+.pw{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;flex-wrap:wrap;pointer-events:none}
+.pn{width:clamp(14px,3.2vw,28px);line-height:0;filter:drop-shadow(0 3px 2px #0006)}.pn svg{width:100%;height:auto}
+.t svg{width:56%;height:56%;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 0 #0003)}
+.t.s,.t.f{flex-direction:column;gap:2px}.t.f svg{width:44%;height:44%}.lb{font-weight:700;color:#fff;font-size:clamp(8px,1.8vw,14px)}
+.t:before{content:"";position:absolute;left:14%;top:8%;width:42%;height:26%;border-radius:50%;background:#fff5;transform:rotate(-25deg)}
+.bsc{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);z-index:0}
+.mini{display:inline-block;width:22px;vertical-align:-5px}.mini svg{width:100%;height:auto}
+.pn.act{animation:bn .7s infinite}
+@keyframes bn{50%{transform:translateY(-8px)}}
+.logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;text-align:center;background:#fffd;border:4px dashed #fb923c;border-radius:26px;padding:8px 16px;font-weight:700;color:#ea580c;font-size:clamp(14px,3.6vw,34px);line-height:1.05}
+.logo small{display:block;color:var(--b);font-size:.42em;margin-top:4px}
+.panel{background:var(--card);border:5px solid #fff;border-radius:26px;padding:14px;display:flex;flex-direction:column;gap:12px;align-self:start;box-shadow:0 6px 0 #0002}
+.mas{display:flex;gap:10px;align-items:center}
+.mas .face{font-size:56px;animation:fl 3s ease-in-out infinite}
+#msg{background:var(--soft);border-radius:18px;padding:10px 14px;font-weight:600;position:relative;flex:1;min-height:3.2em;display:flex;align-items:center}
+#msg:before{content:"";position:absolute;left:-10px;top:50%;border:8px solid transparent;border-right-color:var(--soft);border-left:0;transform:translateY(-50%)}
+.pl{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:18px;background:var(--soft);margin-bottom:6px;border:3px solid transparent;font-weight:600}
+.pl.on{border-color:var(--y);background:#fde68a55;transform:scale(1.03)}
+.pl em{font-style:normal;font-size:28px}.pl b{flex:1}
+button{font:inherit;cursor:pointer;border:0;border-radius:20px;padding:14px 22px;background:linear-gradient(#fb923c,#f97316);color:#fff;font-weight:700;font-size:1.1rem;box-shadow:0 5px 0 #c2410c}
+button:active{transform:translateY(4px);box-shadow:0 1px 0 #c2410c}
+button:disabled{opacity:.55;cursor:default}
+.dice{display:flex;align-items:center;gap:12px}
+.scene{width:84px;height:84px;perspective:420px;flex:none;position:relative}
+.scene:after{content:"";position:absolute;left:10px;right:10px;bottom:-4px;height:12px;border-radius:50%;background:#0004;filter:blur(3px)}
+#cube{width:64px;height:64px;margin:10px;position:relative;transform-style:preserve-3d;transform:rotateX(-22deg) rotateY(-22deg);transition:transform 1.1s cubic-bezier(.2,.8,.25,1)}
+.fc{position:absolute;width:64px;height:64px;border-radius:12px;background:radial-gradient(circle at 30% 25%,#fff,#e6e8ee 85%);border:1px solid #c9ccd6;box-shadow:inset 0 0 8px #0003;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:9px;backface-visibility:hidden}
+.fc i{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#666,#111);place-self:center;box-shadow:inset 0 1px 2px #000}
+
+
+#roll{flex:1}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.85rem;font-weight:600}
+.legend span{border-radius:12px;padding:4px 8px;color:#fff;text-align:center}
+.ov{position:fixed;inset:0;background:#1e1b4baa;display:none;align-items:center;justify-content:center;padding:14px;z-index:9;overflow:auto}
+.ov.show{display:flex;align-items:flex-start}
+.card{margin:auto;background:var(--card);border:8px solid var(--b);border-radius:30px;max-width:540px;width:100%;padding:16px;animation:pop .35s;box-shadow:0 10px 30px #0006}
+@keyframes pop{from{transform:scale(.6) rotate(-4deg);opacity:0}}
+.card h2{margin:0 0 10px;color:#fff;padding:8px 16px;border-radius:40px;font-size:1.2rem;display:flex;justify-content:space-between;gap:8px}
+.q{font-size:1.1rem;font-weight:600;margin:10px 0 12px;line-height:1.4}
+.o{display:block;width:100%;text-align:left;background:var(--soft);color:var(--ink);border:3px solid transparent;box-shadow:0 4px 0 #0002;margin:10px 0;font-weight:600}
+.o:hover:not(:disabled){border-color:var(--y)}
+.o.ok{background:#bbf7d0;color:#14532d;border-color:var(--g)}.o.no{background:#fecdd3;color:#881337;border-color:var(--r)}
+.fb{margin-top:10px;padding:12px;border-radius:18px;background:var(--soft);display:none;font-size:1.05rem}
+.big{font-size:70px;text-align:center;animation:fl 2s infinite}
+.setup{text-align:center}
+.setup input{font:inherit;width:100%;padding:10px;margin:5px 0;border-radius:14px;border:3px solid #cbd5e1;background:#fff;color:#222}
+.rank div{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:2px dashed #cbd5e1;font-size:1.1rem}
+.cf{position:fixed;top:-40px;font-size:30px;z-index:20;pointer-events:none;animation:fall 2.2s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+#snd{position:fixed;right:10px;bottom:10px;padding:8px 12px;font-size:1.2rem;z-index:5}
+</style>
+</head>
+<body>
+<span class="deco" style="left:2%;top:12%">☁️</span><span class="deco" style="right:3%;top:8%;animation-delay:1s">🌈</span><span class="deco" style="left:4%;bottom:8%;animation-delay:2s">🍎</span><span class="deco" style="right:5%;bottom:14%;animation-delay:.5s">🥕</span>
+<header><h1>🔍 DETEKTIF GIZI CILIK 🥦</h1><p>Ayo jadi detektif! Kenali makanan sehat dan menangkan bintang ⭐</p></header>
+<main>
+<div class="board" id="board"></div>
+<div class="panel">
+<div class="mas"><div class="face">🕵️‍♀️</div><div id="msg">Halo, detektif cilik!</div></div>
+<div id="pls"></div>
+<div class="dice"><div class="scene"><div id="cube"></div></div><button id="roll">Lempar Dadu!</button></div>
+<div class="legend"><span style="background:var(--b)">Investigasi</span><span style="background:#d99a00">Petunjuk Pangan</span><span style="background:var(--g)">Misi</span><span style="background:var(--r)">Cek Fakta</span></div>
+<small>Jawab benar = dapat bintang ⭐. Sampai FINISH duluan = bonus 5 bintang! Bintang terbanyak jadi juara 🏆</small>
+</div>
+</main>
+<button id="snd" title="Suara">🔊</button>
+
+<div class="ov show" id="setup"><div class="card setup"><h2 style="background:#7c3aed;justify-content:center">🎉 Ayo Mulai!</h2>
+<p>Berapa pemain yang ikut?</p>
+<div id="np" style="display:flex;gap:8px;justify-content:center;margin-bottom:8px"></div>
+<div id="names"></div><br><button id="go">🚀 Mulai Bermain!</button></div></div>
+<div class="ov" id="cardov"><div class="card" id="card"></div></div>
+<div class="ov" id="endov"><div class="card" id="end"></div></div>
+
+<script>
+const TP={i:{n:'Kartu Investigasi',c:'#3b82f6',ic:'🔍',p:1},p:{n:'Kartu Petunjuk Pangan',c:'#d99a00',ic:'🏷️',p:2},m:{n:'Kartu Misi',c:'#22c55e',ic:'🎯',p:2},r:{n:'Kartu Cek Fakta',c:'#f43f5e',ic:'🛡️',p:2}};
+const Q={
+i:[
+// Subtopik 1. Pengertian UPF
+["Menurut konsep Monteiro dkk. (2019), hal utama yang membedakan ultra-processed food (UPF) dari makanan yang sekadar dimasak dan dikemas adalah ...",["UPF selalu memiliki kandungan energi lebih tinggi daripada makanan segar.","UPF merupakan formulasi industri dari berbagai bahan yang telah dipisahkan atau diubah dari bentuk pangan aslinya.","UPF dibuat menggunakan bahan pangan yang tidak dapat dikonsumsi secara langsung.","UPF merupakan semua makanan yang mengalami proses pemanasan sebelum dikemas."],1,"UPF merupakan formulasi industri dari bahan yang telah dipisahkan atau diubah."],
+["Suatu produk dibuat dari campuran gula, minyak, pati, protein hasil isolasi, serta bahan tambahan yang berfungsi membentuk rasa dan tekstur. Berdasarkan konsep UPF, produk tersebut dikategorikan demikian karena ...",["Mengandung lebih dari satu jenis zat gizi.","Menggunakan bahan pangan yang berasal dari tumbuhan.","Dirakit dari berbagai bahan hasil pemisahan dan pengolahan industri.","Mengalami proses pencampuran sebelum dikemas."],2,"Bahan hasil pemisahan dan pengolahan industri dirakit menjadi produk."],
+["Pernyataan yang paling tepat mengenai hubungan antara UPF dan pangan utuh adalah ...",["UPF umumnya memiliki kandungan pangan utuh yang sangat sedikit atau bahkan tidak ada.","UPF harus mengandung minimal satu bahan pangan utuh agar dapat dipasarkan.","Pangan utuh merupakan bahan utama yang selalu mendominasi komposisi UPF.","UPF hanya dapat dibuat dari pangan utuh yang dikeringkan."],0,"UPF umumnya hanya mengandung sedikit atau tanpa pangan utuh."],
+["Dalam proses pembuatan UPF, tahap awal yang umum dilakukan oleh industri adalah ...",["Mengemas pangan utuh agar lebih tahan lama.","Mencampurkan seluruh bahan pangan tanpa mengubah bentuknya.","Menambahkan perisa dan pewarna pada bahan pangan segar.","Memecah pangan utuh menjadi zat-zat penyusunnya, seperti gula, minyak, protein, pati, dan serat."],3,"Tahap awalnya memecah pangan menjadi zat penyusunnya."],
+["Berikut ini yang paling menggambarkan proses produksi UPF menurut materi adalah ...",["Pangan utuh dicuci, dipotong, lalu disimpan dalam lemari pendingin.","Pangan dipecah menjadi zat penyusun, sebagian diubah secara kimia, kemudian dirakit menggunakan teknik industri.","Pangan direbus, dikeringkan, kemudian dikemas tanpa penambahan bahan lain.","Pangan dicampur dengan garam dan dikemas untuk memperpanjang masa simpan."],1,"Prosesnya meliputi pemisahan, modifikasi kimia, dan perakitan industri."],
+["Mengapa UPF tidak cukup didefinisikan sebagai makanan yang mengalami banyak proses pengolahan?",["Karena semua makanan yang diolah pasti termasuk UPF.","Karena proses pengolahan hanya dapat dilakukan oleh industri besar.","Karena penentuan UPF juga mempertimbangkan jenis bahan dan tujuan formulasi produk.","Karena makanan yang mengalami pengolahan tidak selalu mengalami perubahan bentuk."],2,"Jenis bahan dan tujuan formulasi juga menjadi pertimbangan."],
+["Industri menggunakan bahan seperti maltodekstrin, isolat protein kedelai, dan minyak terhidrogenasi dalam formulasi suatu produk. Keberadaan bahan tersebut relevan dalam identifikasi UPF karena ...",["Bahan-bahan tersebut merupakan contoh zat hasil pemisahan atau modifikasi industri yang jarang digunakan di dapur rumah tangga.","Bahan-bahan tersebut seluruhnya berasal dari hewan.","Bahan-bahan tersebut menunjukkan bahwa produk tidak mengandung energi.","Bahan-bahan tersebut merupakan bahan pangan segar yang belum diolah."],0,"Bahan tersebut merupakan contoh bahan khas industri."],
+["Salah satu alasan UPF disebut sebagai produk hasil “perakitan” adalah ...",["Produk dibuat dengan menyatukan beberapa makanan siap saji.","Produk selalu terdiri atas bahan pangan dari wilayah yang berbeda.","Produk dibuat melalui proses memasak tradisional dalam jumlah besar.","Berbagai zat dan bahan yang telah dipisahkan atau dimodifikasi digabungkan kembali menjadi formulasi produk baru."],3,"Berbagai komponen digabungkan kembali menjadi formulasi baru."],
+["Berikut ini merupakan contoh proses industri yang dapat digunakan dalam pembuatan UPF, yaitu ...",["Pencucian dan pemotongan sayuran.","Ekstrusi, pencetakan, dan penggorengan awal.","Perebusan sederhana dan pendinginan di rumah.","Pengeringan alami dan penyimpanan dalam wadah tertutup."],1,"Ekstrusi, pencetakan, dan penggorengan awal merupakan teknik industri."],
+["Jagung, gandum, kedelai, tebu, dan bit sering digunakan sebagai sumber bahan dalam produksi UPF. Hal tersebut berkaitan dengan ...",["Kemampuannya untuk langsung menjadi bahan tambahan kosmetik.","Kandungan airnya yang selalu lebih tinggi daripada bahan pangan lain.","Pemanfaatannya sebagai sumber zat penyusun pangan, seperti gula, minyak, protein, pati, dan serat.","Ketidakmampuannya untuk dikonsumsi dalam bentuk utuh."],2,"Tanaman tersebut dapat menjadi sumber zat penyusun pangan."],
+["Pernyataan berikut yang menunjukkan pemahaman keliru tentang UPF adalah ...",["UPF dibuat melalui formulasi bahan yang khas industri.","UPF dapat melibatkan beberapa tahap pengolahan yang berbeda.","UPF umumnya mengandung sedikit pangan utuh.","Semua makanan yang dikemas dan dijual di toko otomatis termasuk UPF."],3,"Pangan kemasan tidak otomatis termasuk UPF."],
+["Sebuah produk makanan dibuat dari bahan pangan yang telah dipisahkan menjadi komponen tertentu, kemudian komponen tersebut diolah dan disusun kembali menggunakan teknik industri. Konsep yang paling sesuai untuk menjelaskan proses tersebut adalah ...",["Formulasi ultra-processing.","Pengolahan minimal.","Pengolahan kuliner sederhana.","Pengawetan pangan tradisional."],0,"Proses tersebut menggambarkan formulasi ultra-processing."],
+["Perbedaan mendasar antara makanan yang dimasak sendiri menggunakan bahan segar dan UPF terletak pada ...",["Tempat makanan tersebut dikonsumsi.","Warna dan bentuk akhir makanan.","Tingkat serta tujuan pengolahan dan karakteristik bahan yang digunakan.","Jumlah orang yang mengonsumsi makanan tersebut."],2,"Perbedaannya terletak pada tingkat, tujuan, dan bahan pengolahan."],
+["Mengapa proses pemisahan zat dari pangan utuh menjadi bagian penting dalam pembuatan UPF?",["Agar seluruh zat gizi dalam pangan hilang sebelum diproses.","Agar industri memperoleh bahan-bahan tertentu yang dapat dimodifikasi dan dirakit menjadi formulasi baru.","Agar pangan dapat dikonsumsi tanpa melalui proses pengolahan lanjutan.","Agar produk akhir selalu memiliki kandungan serat yang lebih tinggi."],1,"Pemisahan menghasilkan komponen yang dapat dimodifikasi dan dirakit."],
+["Pernyataan yang paling tepat mengenai bahan penyusun UPF adalah ...",["Seluruh bahan penyusunnya harus berasal dari bahan sintetis.","Bahan penyusunnya hanya boleh berasal dari produk hewani.","Bahan penyusunnya selalu berupa pangan utuh yang dicampur secara langsung.","Sebagian besar bahan penyusunnya dapat berupa zat atau bahan yang hanya digunakan dalam industri dan jarang ditemukan di dapur rumah tangga."],3,"Bahan UPF banyak menggunakan komponen khas industri."],
+["Suatu makanan mengalami proses penggilingan dan pencampuran, tetapi hanya menggunakan bahan pangan yang umum ditemukan di dapur rumah tangga. Kesimpulan yang tepat adalah ...",["Makanan tersebut belum tentu termasuk UPF karena penentuan UPF tidak hanya berdasarkan jumlah proses pengolahan.","Makanan tersebut pasti termasuk UPF karena mengalami penggilingan.","Makanan tersebut termasuk UPF karena mengalami pencampuran bahan.","Makanan tersebut pasti termasuk UPF karena tidak lagi berbentuk pangan utuh."],0,"Penggilingan dan pencampuran saja tidak cukup untuk menetapkan UPF."],
+["Tahap modifikasi kimia dalam produksi UPF dapat melibatkan proses seperti ...",["Pencucian dan pengupasan.","Pemotongan dan pengemasan.","Hidrolisis dan hidrogenasi.","Perebusan dan pendinginan."],2,"Hidrolisis dan hidrogenasi merupakan contoh modifikasi kimia."],
+["Mengapa UPF dapat memiliki karakteristik yang sangat berbeda dari bahan pangan asalnya?",["Karena seluruh bahan pangan asalnya selalu diganti dengan air.","Karena bahan penyusunnya dapat dipisahkan, dimodifikasi, lalu dirakit kembali melalui proses industri.","Karena UPF hanya dibuat dengan cara mengeringkan bahan pangan.","Karena UPF tidak menggunakan bahan yang berasal dari pangan."],1,"Pemisahan, modifikasi, dan perakitan mengubah karakteristik produk."],
+["Pernyataan yang paling sesuai dengan konsep UPF adalah ...",["Tingkat pengolahan pangan ditentukan hanya dari lamanya makanan dimasak.","Produk yang memiliki kemasan menarik pasti termasuk UPF.","Semua produk dengan masa simpan panjang pasti termasuk UPF.","UPF merupakan formulasi industri yang umumnya menggunakan bahan hasil pemisahan atau modifikasi serta bahan tambahan tertentu."],3,"Definisi UPF berfokus pada formulasi dan bahan khas industri."],
+["Seorang siswa menyatakan bahwa susu yang dipasteurisasi dan dikemas pasti termasuk UPF karena telah melalui proses industri. Tanggapan yang paling tepat adalah ...",["Benar, karena semua proses industri menghasilkan UPF.","Benar, karena semua produk kemasan termasuk UPF.","Tidak tepat, karena pasteurisasi dan pengemasan saja tidak otomatis menjadikan suatu pangan sebagai UPF.","Tidak tepat, karena susu tidak dapat dikategorikan berdasarkan tingkat pengolahannya."],2,"Pasteurisasi dan pengemasan tidak otomatis menjadikan pangan UPF."],
+// Subtopik 2. Klasifikasi Pangan NOVA
+["Sistem klasifikasi NOVA mengelompokkan pangan berdasarkan ...",["Kandungan energi dan zat gizi makro.","Harga dan ketersediaan produk pangan.","Tingkat dan tujuan pengolahan pangan.","Asal bahan pangan dan tempat produksinya."],2],
+["Seorang siswa mengonsumsi jagung rebus tanpa tambahan garam, gula, atau minyak. Berdasarkan NOVA, jagung tersebut termasuk ...",["Kelompok 1.","Kelompok 2.","Kelompok 3.","Kelompok 4."],0],
+["Susu yang mengalami pasteurisasi dan pengemasan tanpa penambahan bahan lain termasuk kelompok ...",["Kelompok 4 karena diproses oleh industri.","Kelompok 3 karena mengalami pemanasan.","Kelompok 2 karena berasal dari bahan alami.","Kelompok 1 karena termasuk pangan yang diolah minimal."],3],
+["Minyak, gula, dan garam dikelompokkan dalam NOVA kelompok 2 karena ...",["Merupakan produk siap konsumsi yang dirakit secara industri.","Digunakan terutama untuk menyiapkan, membumbui, dan memasak pangan kelompok 1.","Dibuat dengan menambahkan bahan tambahan kosmetik.","Merupakan pangan utuh yang hanya mengalami pengemasan."],1],
+["Kacang tanah yang dikeringkan tanpa penambahan bahan lain termasuk kelompok 1 karena ...",["Mengalami proses pengolahan yang bertujuan membentuk produk baru.","Mengandung minyak alami sehingga termasuk kelompok 2.","Mengalami pengolahan minimal tanpa penambahan garam, gula, atau minyak.","Termasuk produk industri dengan bahan tambahan kosmetik."],2],
+["Seseorang mengolah tomat dengan menambahkan garam, kemudian mengemasnya melalui proses pengawetan. Berdasarkan prinsip NOVA, produk tersebut paling sesuai dikategorikan sebagai ...",["Kelompok 3.","Kelompok 1.","Kelompok 2.","Kelompok 4."],0],
+["Perbedaan utama antara kelompok 1 dan kelompok 2 NOVA adalah ...",["Kelompok 1 hanya berasal dari hewan, sedangkan kelompok 2 berasal dari tumbuhan.","Kelompok 1 merupakan produk siap saji, sedangkan kelompok 2 merupakan produk kemasan.","Kelompok 1 mengandung bahan tambahan kosmetik, sedangkan kelompok 2 tidak.","Kelompok 1 merupakan pangan alami atau diolah minimal, sedangkan kelompok 2 merupakan bahan kuliner yang diperoleh dari pangan atau alam."],3],
+["Roti yang dibuat dari tepung gandum, air, garam, dan ragi tanpa tambahan bahan lain termasuk kelompok ...",["Kelompok 1.","Kelompok 3.","Kelompok 2.","Kelompok 4."],1],
+["Penambahan garam atau gula pada pangan kelompok 1 melalui proses pengolahan seperti pengalengan dapat menghasilkan pangan kelompok ...",["Kelompok 1.","Kelompok 2.","Kelompok 3.","Kelompok 4."],2],
+["Berikut ini yang merupakan contoh pangan kelompok 2 adalah ...",["Minyak sayur yang digunakan untuk memasak.","Jagung rebus tanpa tambahan bahan.","Roti dengan pengemulsi dan pewarna.","Buah segar yang dikemas."],0],
+["Seorang siswa menganggap semua produk yang mengalami proses pengolahan termasuk kelompok 4 NOVA. Pernyataan tersebut ...",["Benar, karena seluruh proses pengolahan menghasilkan UPF.","Benar, karena kelompok 4 mencakup seluruh pangan kemasan.","Benar, karena pangan kelompok 1 tidak mengalami proses apa pun.","Salah, karena NOVA membedakan pangan berdasarkan tingkat dan tujuan pengolahannya menjadi empat kelompok."],3],
+["Proses pasteurisasi, pembekuan, dan pengemasan tanpa penambahan garam, gula, atau minyak merupakan contoh proses yang dapat ditemukan pada kelompok ...",["Kelompok 4.","Kelompok 1.","Kelompok 3.","Kelompok 2."],1],
+["Keju yang dibuat melalui pengolahan susu dengan penambahan garam dan proses fermentasi non-alkohol termasuk ...",["Kelompok 1.","Kelompok 2.","Kelompok 3.","Kelompok 4."],2],
+["Perbedaan paling mendasar antara pangan kelompok 3 dan kelompok 4 adalah ...",["Kelompok 3 masih berupa pangan asli yang ditambahkan bahan seperti garam atau gula, sedangkan kelompok 4 dirakit dari bahan khas industri dan bahan tambahan kosmetik.","Kelompok 3 selalu memiliki energi lebih tinggi daripada kelompok 4.","Kelompok 3 hanya berasal dari tumbuhan, sedangkan kelompok 4 hanya berasal dari hewan.","Kelompok 3 tidak mengalami pengolahan, sedangkan kelompok 4 mengalami pengolahan."],0],
+["Seorang siswa menemukan dua produk jagung. Produk pertama berupa jagung rebus polos, sedangkan produk kedua berupa jagung kalengan dengan tambahan garam. Klasifikasi yang tepat adalah ...",["Keduanya kelompok 1.","Keduanya kelompok 3.","Produk pertama kelompok 2 dan kedua kelompok 4.","Produk pertama kelompok 1 dan kedua kelompok 3."],3],
+["Mengapa minyak dan gula tidak otomatis dikategorikan sebagai UPF meskipun telah melalui proses industri?",["Karena keduanya tidak mengandung energi.","Karena keduanya termasuk bahan kuliner olahan kelompok 2.","Karena keduanya selalu dikonsumsi bersama buah.","Karena keduanya tidak mengalami proses pengolahan."],1],
+["Sistem NOVA mempertimbangkan metode fisik, biologis, dan kimia dalam pengolahan pangan. Hal ini menunjukkan bahwa ...",["Klasifikasi hanya ditentukan oleh kandungan gizi.","Klasifikasi hanya memperhatikan proses pemanasan.","Penentuan kelompok pangan mempertimbangkan berbagai proses dan penggunaan bahan tambahan.","Semua metode pengolahan menghasilkan kelompok pangan yang sama."],2],
+["Manakah contoh produk yang paling sesuai dengan kelompok 4 NOVA?",["Minuman ringan dengan perisa, pewarna, dan pemanis.","Susu pasteurisasi tanpa tambahan bahan.","Minyak kelapa untuk memasak.","Sayuran beku tanpa tambahan bahan."],0],
+["Dalam pola makan tradisional yang dijelaskan materi, kelompok 1 sampai 3 berperan sebagai ...",["Kelompok pangan yang harus sepenuhnya dihindari.","Produk yang hanya digunakan sebagai camilan.","Kelompok pangan yang selalu dikonsumsi dalam bentuk kemasan.","Fondasi pola makan yang dilengkapi dengan berbagai bahan pangan."],3],
+["Kesimpulan paling tepat mengenai sistem klasifikasi NOVA adalah ...",["Seluruh pangan yang diproduksi industri termasuk kelompok 4.","Tidak semua pangan yang diolah termasuk UPF karena setiap kelompok memiliki karakteristik dan tujuan pengolahan berbeda.","Pangan kelompok 1 sampai 3 tidak dapat dikonsumsi dalam pola makan sehat.","Penentuan kelompok pangan hanya berdasarkan kandungan gula dan lemak."],1],
+// Subtopik 3. Karakteristik UPF
+["Salah satu karakteristik utama UPF adalah tingkat pengolahannya yang tinggi dan bertahap. Urutan proses yang paling sesuai adalah ...",["Pengemasan, pencucian, pemotongan, dan penyimpanan.","Perebusan, pendinginan, pengeringan, dan pengemasan.","Pencampuran bahan segar, pengukusan, dan penyajian.","Pemisahan zat pangan, modifikasi kimia, perakitan industri, penambahan bahan tambahan, dan pengemasan."],3],
+["Berikut ini yang termasuk contoh bahan pangan khas industri dalam formulasi UPF adalah ...",["Garam dapur dan minyak kelapa.","Maltodekstrin dan isolat protein kedelai.","Beras utuh dan sayuran segar.","Buah segar dan kacang-kacangan."],1],
+["Mengapa penggunaan isolat protein kedelai dapat menjadi petunjuk karakteristik UPF?",["Karena merupakan sumber protein yang telah dipisahkan dan diolah secara industri.","Karena termasuk pangan utuh yang belum mengalami pengolahan.","Karena hanya digunakan untuk memasak di rumah.","Karena merupakan bahan tambahan yang berfungsi sebagai pengawet."],0],
+["Minyak terhidrogenasi dan minyak terinteresterifikasi termasuk bahan yang perlu diperhatikan karena ...",["Merupakan contoh pangan kelompok 1.","Selalu digunakan sebagai bahan pengawet.","Termasuk minyak yang telah mengalami modifikasi melalui proses industri.","Merupakan bahan pangan yang tidak mengalami perubahan."],2],
+["Fungsi utama bahan tambahan kosmetik dalam UPF adalah ...",["Meningkatkan jumlah pangan utuh dalam produk.","Menghilangkan seluruh kandungan energi produk.","Mempercepat proses pembusukan pangan.","Membuat produk memiliki rasa, aroma, warna, atau tekstur yang menarik."],3],
+["Berikut ini yang termasuk bahan tambahan kosmetik adalah ...",["Tepung gandum dan air.","Perisa, pewarna, dan pengemulsi.","Beras dan kacang-kacangan.","Garam dan minyak untuk memasak."],1],
+["Suatu produk memiliki rasa yang sangat kuat dan tekstur yang seragam meskipun dibuat dari berbagai bahan hasil pengolahan industri. Karakteristik yang paling berkaitan dengan kondisi tersebut adalah ...",["Penggunaan bahan tambahan kosmetik.","Pengolahan minimal.","Penggunaan pangan utuh tanpa perubahan.","Penggunaan bahan kuliner kelompok 2 saja."],0],
+["Salah satu fungsi bahan tambahan kosmetik adalah menyamarkan sifat inderawi yang tidak diinginkan. Maksud dari pernyataan tersebut adalah ...",["Menghilangkan seluruh bahan pangan dari produk.","Mengubah kandungan protein menjadi lemak.","Menutupi atau memperbaiki tampilan, rasa, aroma, dan tekstur produk.","Memperpanjang masa simpan tanpa memengaruhi karakteristik produk."],2],
+["Berikut ini merupakan contoh bahan khas industri berupa sumber protein, kecuali ...",["Kasein.","Protein whey.","Isolat protein kedelai.","Garam dapur."],3],
+["UPF umumnya dirancang agar murah, tahan lama, praktis, dan menarik secara komersial. Kondisi tersebut menunjukkan karakteristik berupa ...",["Pengolahan minimal.","Rancangan komersial dan strategi pemasaran.","Penggunaan bahan pangan utuh.","Pengolahan tradisional."],1],
+["Kemasan mencolok, klaim kesehatan, dan penempatan produk pada rak utama toko merupakan contoh ...",["Strategi pemasaran UPF.","Proses fermentasi pangan.","Pengolahan minimal.","Proses pemisahan zat pangan."],0],
+["Mengapa UPF dapat menggeser konsumsi pangan segar dan makanan yang dimasak sendiri?",["Karena pangan segar tidak dapat disimpan.","Karena seluruh pangan segar memiliki harga lebih mahal.","Karena UPF memiliki karakteristik praktis, tahan lama, menarik, dan dipromosikan secara luas.","Karena pangan segar tidak dapat dikonsumsi sehari-hari."],2],
+["Profil gizi yang umumnya ditemukan pada UPF berdasarkan materi adalah ...",["Tinggi serat, protein, vitamin, dan mineral.","Rendah energi, gula, lemak, dan garam.","Tinggi protein dan serat dengan kandungan gula rendah.","Berkepadatan energi tinggi, tinggi gula, lemak tidak sehat, dan garam, serta rendah beberapa zat gizi."],3],
+["Mengapa UPF dapat memiliki daya kenyang yang rendah menurut materi?",["Karena seluruh UPF tidak mengandung energi.","Karena studi eksperimental menunjukkan UPF berkaitan dengan respons glikemik tinggi dan daya kenyang rendah.","Karena UPF selalu dikonsumsi bersama buah.","Karena UPF tidak mengalami proses pengolahan."],1],
+["Pernyataan yang tepat mengenai karakteristik bahan UPF adalah ...",["Bahan khas UPF dapat berupa zat pangan hasil pemisahan atau modifikasi dan bahan tambahan kosmetik.","Bahan UPF hanya terdiri atas bahan pangan segar.","Bahan UPF selalu sama dengan bahan yang digunakan dalam masakan rumah.","Bahan UPF tidak pernah berasal dari tumbuhan."],0],
+["Berikut ini yang bukan merupakan karakteristik bahan tambahan kosmetik adalah ...",["Penguat rasa.","Pengemulsi.","Garam dapur yang digunakan untuk memasak.","Pemanis."],2],
+["Penggunaan pengental, pembentuk gel, dan pengemulsi pada produk UPF berkaitan dengan ...",["Proses penghilangan seluruh zat gizi.","Pengolahan pangan secara minimal.","Peningkatan kandungan pangan utuh.","Pembentukan karakteristik fisik dan tekstur produk."],3],
+["Seorang siswa menemukan produk dengan kandungan gula, lemak tidak sehat, dan garam yang tinggi serta serat yang rendah. Berdasarkan materi, karakteristik tersebut ...",["Cukup untuk memastikan produk termasuk kelompok 1.","Sesuai dengan profil gizi yang umum ditemukan pada UPF, tetapi klasifikasi tetap perlu melihat daftar bahan.","Membuktikan bahwa produk tidak mengalami pengolahan.","Menunjukkan bahwa produk pasti termasuk kelompok 2."],1],
+["Perusahaan memasarkan produk melalui iklan di media sosial, televisi, dan media cetak, termasuk promosi yang menyasar anak-anak. Hal tersebut termasuk karakteristik UPF berupa ...",["Rancangan komersial dan pemasaran yang agresif.","Pengolahan minimal.","Penggunaan bahan pangan utuh.","Pengawetan secara tradisional."],0],
+["Kesimpulan yang paling tepat mengenai karakteristik UPF adalah ...",["UPF hanya dapat dikenali dari rasa manisnya.","UPF selalu memiliki bentuk yang sama.","UPF memiliki karakteristik yang berkaitan dengan proses industri, bahan khas industri, bahan tambahan kosmetik, rancangan komersial, dan profil gizinya.","UPF hanya ditentukan berdasarkan lama penyimpanan produk."],2],
+// Subtopik 4. Identifikasi Produk UPF
+["Seorang siswa ingin mengidentifikasi apakah suatu produk termasuk UPF. Bagian kemasan yang paling penting diperiksa berdasarkan materi adalah ...",["Nama merek.","Gambar produk.","Daftar komposisi atau daftar bahan.","Informasi harga."],2],
+["Mengapa daftar komposisi menjadi alat utama untuk mengenali UPF?",["Karena daftar komposisi menunjukkan seluruh proses produksi secara rinci.","Karena industri wajib mencantumkan daftar bahan pada pangan dan minuman kemasan.","Karena daftar komposisi selalu menunjukkan kandungan energi produk.","Karena daftar komposisi hanya berisi bahan tambahan kosmetik."],1],
+["Ketika membaca daftar komposisi, konsumen perlu memperhatikan bahan yang tidak lazim ditemukan di dapur rumah tangga. Contoh bahan tersebut adalah ...",["Protein terhidrolisis dan maltodekstrin.","Beras dan jagung utuh.","Garam dan minyak goreng biasa.","Sayuran dan buah segar."],0],
+["Pada daftar komposisi, bahan tambahan kosmetik sering ditemukan pada ...",["Bagian luar kemasan.","Nama merek produk.","Bagian informasi harga.","Bagian akhir daftar komposisi."],3],
+["Roti A memiliki komposisi tepung gandum, air, garam, dan ragi. Roti B memiliki komposisi yang sama, tetapi ditambahkan pengemulsi. Berdasarkan materi, klasifikasi yang tepat adalah ...",["Roti A dan B sama-sama kelompok 1.","Roti A kelompok 3 dan roti B kelompok 4.","Roti A kelompok 4 dan roti B kelompok 3.","Roti A kelompok 2 dan roti B kelompok 1."],1],
+["Produk sereal berupa oat polos tanpa tambahan bahan termasuk ...",["Kelompok 4.","Kelompok 3.","Kelompok 1.","Kelompok 2."],2],
+["Oat polos yang ditambahkan gula tanpa bahan tambahan kosmetik dapat dikategorikan sebagai ...",["Kelompok 3.","Kelompok 1.","Kelompok 2.","Kelompok 4."],0],
+["Oat polos yang ditambahkan perisa atau pewarna dapat dikategorikan sebagai ...",["Kelompok 1.","Kelompok 2.","Kelompok 3.","Kelompok 4."],3],
+["Seorang siswa menemukan bahan “monosodium glutamat” pada daftar komposisi dengan keterangan sebagai penguat rasa. Berdasarkan materi, bahan tersebut termasuk ...",["Bahan pangan utuh.","Bahan tambahan kosmetik.","Bahan kuliner kelompok 2.","Pangan kelompok 1."],1],
+["Bahan pengawet saja tidak otomatis menunjukkan bahwa produk termasuk UPF karena ...",["Pengawet hanya digunakan pada pangan segar.","Pengawet selalu merupakan bahan pangan utuh.","Bahan pengawet juga dapat digunakan pada pangan olahan dan beberapa kelompok pangan lainnya.","Seluruh bahan pengawet memiliki fungsi sebagai pemanis."],2],
+["Seorang siswa menemukan bahan “lesitin kedelai” yang berfungsi sebagai pengemulsi dalam daftar komposisi. Kesimpulan yang paling sesuai dengan materi adalah ...",["Produk tersebut memiliki petunjuk yang kuat sebagai UPF.","Produk tersebut pasti termasuk pangan kelompok 1.","Produk tersebut pasti termasuk bahan kuliner kelompok 2.","Produk tersebut tidak mengalami proses industri."],0],
+["Jika konsumen menemukan nama bahan tambahan yang tidak dikenal, sumber yang disarankan dalam materi untuk mencari kelas fungsi bahan tersebut adalah ...",["Daftar harga produk di toko.","Iklan dari produsen.","Media sosial tanpa sumber.","Codex Alimentarius dari FAO dan WHO."],3],
+["Selain daftar komposisi, aplikasi yang disebutkan dalam materi untuk membantu mengidentifikasi produk UPF melalui barcode adalah ...",["NutriSurvey.","Open Food Facts.","Microsoft Excel.","Google Maps."],1],
+["Mengapa konsumen tidak cukup hanya melihat kandungan gula, lemak, atau energi untuk menentukan apakah suatu produk termasuk UPF?",["Karena kandungan gizi tidak pernah berhubungan dengan kualitas pangan.","Karena semua produk tinggi energi termasuk kelompok 1.","Karena penentu utama klasifikasi UPF adalah daftar bahan dan karakteristik pengolahannya.","Karena angka pada informasi nilai gizi selalu salah."],2],
+["Produk A dan B memiliki tampilan serta bentuk yang hampir sama. Namun, daftar komposisi keduanya berbeda. Hal ini menunjukkan bahwa ...",["Produk dengan tampilan serupa dapat memiliki klasifikasi NOVA yang berbeda.","Produk dengan bentuk serupa selalu memiliki tingkat pengolahan yang sama.","Klasifikasi pangan hanya ditentukan berdasarkan bentuk produk.","Produk dengan harga sama pasti memiliki komposisi yang sama."],0],
+["Daftar bahan suatu produk mencantumkan protein whey, maltodekstrin, dan perisa. Berdasarkan materi, kesimpulan yang paling tepat adalah ...",["Produk tersebut termasuk pangan kelompok 1.","Produk tersebut termasuk bahan kuliner kelompok 2.","Produk tersebut pasti merupakan pangan kelompok 3.","Produk tersebut menunjukkan ciri penggunaan bahan khas industri dan bahan tambahan kosmetik yang mengarah pada UPF."],3],
+["Jika suatu produk memiliki daftar komposisi yang pendek dan bahan-bahannya mudah dikenali, hal tersebut umumnya menunjukkan ...",["Tingkat pengolahan yang lebih rendah.","Tingkat pengolahan yang lebih tinggi.","Produk pasti termasuk kelompok 4.","Produk pasti memiliki kandungan gula tinggi."],0],
+["Seorang konsumen menemukan produk dengan bahan pewarna karamel pada daftar komposisi. Berdasarkan materi, pewarna merupakan ...",["Bahan pangan kelompok 1.","Bahan tambahan kosmetik yang dapat menjadi penanda UPF.","Bahan kuliner kelompok 2.","Bahan pengawet yang tidak memiliki fungsi inderawi."],1],
+["Dalam membandingkan dua produk sejenis, konsumen sebaiknya memperhatikan ...",["Warna kemasan dan popularitas merek saja.","Harga dan ukuran kemasan saja.","Daftar komposisi, bahan khas industri, dan keberadaan bahan tambahan kosmetik.","Tempat produk dipajang di toko saja."],2],
+["Kesimpulan paling tepat dalam mengidentifikasi produk UPF adalah ...",["Semua produk kemasan merupakan UPF.","Semua produk yang mengandung pengawet merupakan UPF.","Produk dengan energi tinggi pasti termasuk UPF.","Identifikasi perlu melihat daftar bahan, terutama bahan khas industri dan bahan tambahan kosmetik, bukan hanya kemasan atau nilai gizinya."],3]],
+p:[
+["Di label kemasan, bahan yang ditulis PERTAMA adalah bahan yang...",["Paling sedikit","Paling banyak","Paling mahal"],1,"Bahan pertama jumlahnya paling banyak."],
+["Label: gula, perisa, pewarna. Bahan paling banyak yang mana?",["🍬 Gula","🍓 Perisa","🎨 Pewarna"],0,"Gula ditulis pertama, jadi jumlahnya paling banyak. Jajanan ini manis sekali!"],
+["Tulisan 'rendah lemak' berarti pasti sehat?",["Ya, pasti","Belum tentu, cek gula dan garam juga","Tidak perlu dilihat"],1,"Produk rendah lemak bisa tetap tinggi gula atau garam. Baca semua labelnya."],
+["Terlalu banyak garam bisa membuat...",["❤️ Tekanan darah tinggi","🌀 Rambut keriting","📏 Tambah tinggi"],0,"Garam berlebihan tidak baik untuk jantung dan tekanan darah."],
+["Batas gula sehari sekitar...",["🥄 4 sendok makan","🥄 10 sendok makan","🍽️ 1 piring"],0,"Anjuran gula maksimal sekitar 4 sendok makan (50 gram) per hari."],
+["Tanggal kedaluwarsa artinya...",["Tanggal membeli","Batas aman untuk dimakan","Ulang tahun makanan"],1,"Setelah tanggal itu, makanan tidak aman dimakan lagi."]],
+m:[
+["Pilih sarapan paling sehat!",["🍚🥚🥦 Nasi, telur, sayur","🍬 Permen","🥤 Soda"],0,"Sarapan lengkap memberi tenaga untuk belajar."],
+["Kamu lapar di sekolah. Camilan terbaik?",["🍜 Mi instan","🍌 Pisang","🍟 Keripik"],1,"Pisang banyak serat, tidak banyak bahan tambahan, dan lebih sehat."],
+["Haus habis main bola. Minum apa?",["🥤 Soda","🧋 Boba manis","💧 Air putih"],2,"Air putih paling baik dan tidak mengandung gula tambahan."],
+["Mana yang sumber protein?",["🥬 Bayam","🥚 Telur","🍠 Singkong"],1,"Telur, ikan, tempe, dan tahu adalah sumber protein."],
+["Pilih bekal yang kaya serat!",["🥕🍎 Sayur dan buah","🌭 Sosis","🍗 Nugget"],0,"Serat membuat perut sehat dan kenyang lebih lama."],
+["Supaya tulang kuat, pilih...",["🍵 Teh manis","🥛 Susu","🍘 Kerupuk"],1,"Susu, ikan teri, dan tahu mengandung kalsium untuk tulang."]],
+r:[
+["Anak yang sering makan UPF punya risiko sakit lebih tinggi. Apakah UPF PASTI penyebabnya?",["Ya, pasti","Belum pasti, masih ada faktor lain","Tidak ada hubungannya"],1,"Penelitian baru menemukan hubungan, belum tentu sebab-akibat langsung. Tetap kurangi UPF ya!"],
+["Tubuh tidak butuh lemak sama sekali. Benar?",["Benar","Salah, tubuh butuh lemak sehat","Benar untuk anak-anak"],1,"Lemak sehat, misalnya dari ikan dan kacang, tetap dibutuhkan."],
+["Vitamin pil bisa menggantikan makanan bergizi. Benar?",["Salah, makanan bergizi tetap perlu","Benar","Benar kalau mahal"],0,"Makanan utuh punya serat dan banyak zat gizi lain."],
+["Tidak sarapan membuat kita lebih pintar. Benar?",["Benar","Salah, kita jadi susah fokus","Benar kalau malas"],1,"Sarapan membantu kita konsentrasi di kelas."],
+["Jus kotak sama sehatnya dengan buah utuh?",["Ya, sama","Tidak, buah utuh lebih banyak serat","Jus kotak lebih sehat"],1,"Jus kemasan sering ada gula tambahan dan seratnya sedikit."],
+["Cuci tangan sebelum makan itu penting?",["Ya, supaya kuman tidak masuk","Tidak penting","Hanya hari Minggu"],0,"Cuci tangan pakai sabun mencegah kuman masuk ke perut."]]};
+const COL=['#ec4899','#7c3aed','#f97316','#14b8a6'];
+const pawn=c=>`<svg viewBox="0 0 24 32"><ellipse cx="12" cy="29" rx="9" ry="3" fill="#0003"/><path d="M5 28c0-7 3-9 4-12h6c1 3 4 5 4 12z" fill="${c}" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="10" r="7" fill="${c}" stroke="#fff" stroke-width="1.5"/><circle cx="9.5" cy="9.5" r="1.3" fill="#fff"/><circle cx="14.5" cy="9.5" r="1.3" fill="#fff"/><path d="M9.5 13q2.5 2 5 0" stroke="#fff" fill="none" stroke-width="1.2" stroke-linecap="round"/></svg>`;
+const IC={i:'<circle cx="10" cy="10" r="6.5"/><path d="M15 15l6 6"/>',p:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/>',m:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',r:'<path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M12 8v7M8.5 11.5h7"/>',f:'<path d="M7 3h10v5a5 5 0 01-10 0z"/><path d="M7 5H3v2a4 4 0 004 4M17 5h4v2a4 4 0 01-4 4M12 13v4M8 21h8M9 17h6"/>'};
+const svgI=k=>`<svg viewBox="0 0 24 24">${IC[k]}</svg>`;
+const PAT=['i','p','m','r','m','i','r','p'];
+const N=35,S=34;
+let P=[],cur=0,busy=false,pool={},np=2,snd=true;
+const $=id=>document.getElementById(id);
+const type=i=>i==0?'s':i==S?'f':PAT[(i-1)%8];
+const B=$('board');
+for(let i=0;i<N;i++){const r=Math.floor(i/7),c=i%7,col=r%2?6-c:c,d=document.createElement('div'),t=type(i);
+d.className='t '+t;d.id='t'+i;d.style.gridColumn=col+1;d.style.gridRow=5-r;
+d.innerHTML=(t=='s'?'<span class="lb">START</span>':t=='f'?svgI('f')+'<span class="lb">FINISH</span>':svgI(t))+(t=='s'||t=='f'?'':'<small>'+i+'</small>')+'<div class="pw"></div>';B.appendChild(d);}
+const pts=[];for(let i=0;i<N;i++){const r=Math.floor(i/7),c=i%7,col=r%2?6-c:c;pts.push((col*100+50)+','+((4-r)*100+50))}
+let dc='<polyline points="'+pts.join(' ')+'" fill="none" stroke="#b45309" stroke-opacity=".35" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="#fde68a" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>';
+for(let x=0;x<=7;x++)for(let y=0;y<=5;y++){const k=(x*2+y*3)%4,X=x*100,Y=y*100;
+if(k==0)dc+=`<rect x="${X-3}" y="${Y-2}" width="6" height="14" fill="#92400e"/><circle cx="${X}" cy="${Y-8}" r="15" fill="#16a34a"/><circle cx="${X-5}" cy="${Y-10}" r="3" fill="#ef4444"/><circle cx="${X+6}" cy="${Y-5}" r="3" fill="#ef4444"/>`;
+else if(k==1)dc+=`<g transform="translate(${X} ${Y})" fill="#f472b6"><circle cy="-6" r="5"/><circle cx="6" r="5"/><circle cy="6" r="5"/><circle cx="-6" r="5"/><circle r="4" fill="#fde047"/></g>`;
+else if(k==2)dc+=`<ellipse cx="${X}" cy="${Y}" rx="16" ry="10" fill="#22c55e"/><ellipse cx="${X+4}" cy="${Y-3}" rx="6" ry="3" fill="#86efac"/>`;}
+B.insertAdjacentHTML('afterbegin','<svg class="bsc" viewBox="0 0 700 500">'+dc+'</svg>');
+const PIP={1:[5],2:[1,9],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
+const FT={1:'rotateY(0deg) ',2:'rotateY(90deg) ',3:'rotateX(90deg) ',4:'rotateX(-90deg) ',5:'rotateY(-90deg) ',6:'rotateY(180deg) '};
+$('cube').innerHTML=[1,2,3,4,5,6].map(n=>`<div class="fc" style="transform:${FT[n]}translateZ(32px)">`+Array.from({length:9},(_,k)=>PIP[n].includes(k+1)?'<i></i>':'<span></span>').join('')+'</div>').join('');
+const RT={1:[0,0],2:[0,-90],3:[-90,0],4:[90,0],5:[0,90],6:[0,180]};let sp=0;
+function beep(f,d=.12,ty='sine'){if(!snd)return;try{const a=beep.a||(beep.a=new (window.AudioContext||window.webkitAudioContext)()),o=a.createOscillator(),g=a.createGain();o.type=ty;o.frequency.value=f;g.gain.value=.12;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+d)}catch(e){}}
+$('snd').onclick=()=>{snd=!snd;$('snd').textContent=snd?'🔊':'🔇'};
+function confetti(){const e=['🎉','⭐','🎊','✨','🌟','🍎','🥦'];for(let i=0;i<28;i++){const s=document.createElement('span');s.className='cf';s.textContent=e[i%e.length];s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3200)}}
+function drawSetup(){$('np').innerHTML=[2,3,4].map(n=>`<button style="${n==np?'':'background:#94a3b8;box-shadow:0 5px 0 #64748b'}" onclick="np=${n};drawSetup()">${n} pemain</button>`).join('');
+$('names').innerHTML=Array.from({length:np},(_,i)=>`<input id="n${i}" placeholder="Nama pemain ${i+1}" maxlength="12">`).join('');}
+drawSetup();
+$('go').onclick=()=>{P=Array.from({length:np},(_,i)=>({n:$('n'+i).value.trim()||'Pemain '+(i+1),pos:0,sc:0,a:'<span class="mini">'+pawn(COL[i])+'</span>',c:COL[i]}));cur=0;pool={};$('setup').classList.remove('show');draw();say('Giliran '+P[0].n+' '+P[0].a+'. Ayo lempar dadu!');beep(660)};
+function say(t){$('msg').innerHTML=t}
+function draw(){
+$('pls').innerHTML=P.map((p,i)=>`<div class="pl ${i==cur?'on':''}"><em>${p.a}</em><b>${p.n}</b><span>⭐ ${p.sc}</span></div>`).join('');
+document.querySelectorAll('.pw').forEach(e=>e.innerHTML='');
+P.forEach((p,i)=>{$('t'+p.pos).querySelector('.pw').insertAdjacentHTML('beforeend',`<span class="pn ${i==cur?'act':''}">${pawn(p.c)}</span>`)});}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+$('roll').onclick=async()=>{
+if(busy)return;busy=true;$('roll').disabled=true;
+const v=1+Math.floor(Math.random()*6);sp+=720;
+$('cube').style.transform=`rotateX(-22deg) rotateY(-22deg) rotateX(${RT[v][0]+sp}deg) rotateY(${RT[v][1]+sp}deg)`;
+for(let k=0;k<7;k++){beep(300+k*40,.05);await sleep(150)}
+say(P[cur].n+' maju '+v+' langkah!');
+const p=P[cur];
+for(let k=0;k<v&&p.pos<S;k++){p.pos++;draw();beep(520+k*60,.08);await sleep(280)}
+if(p.pos==S){p.sc+=5;draw();return finish();}
+await sleep(300);ask(type(p.pos));};
+function ask(t){
+if(!pool[t]||!pool[t].length)pool[t]=Q[t].map((_,i)=>i).sort(()=>Math.random()-.5);
+const q0=Q[t][pool[t].pop()],ord=q0[1].map((_,k)=>k).sort(()=>Math.random()-.5),q=[q0[0],ord.map(k=>q0[1][k]),ord.indexOf(q0[2]),q0[3]||('Jawaban yang benar: '+q0[1][q0[2]])],T=TP[t],c=$('card');c.style.borderColor=T.c;
+c.innerHTML=`<h2 style="background:${T.c}"><span>${T.ic} ${T.n}</span><span>⭐ ${T.p}</span></h2><div><b>${P[cur].a} ${P[cur].n}</b>, ayo jawab!</div><div class="q">${q[0]}</div>`+
+q[1].map((o,i)=>`<button class="o" data-i="${i}">${'ABCD'[i]}. ${o}</button>`).join('')+`<div class="fb" id="fb"></div><button id="nx" style="display:none;margin-top:10px;width:100%">Lanjut ➜</button>`;
+$('cardov').classList.add('show');beep(700,.15);
+c.querySelectorAll('.o').forEach(b=>b.onclick=()=>{
+const ok=+b.dataset.i==q[2];
+c.querySelectorAll('.o').forEach((x,i)=>{x.disabled=true;if(i==q[2])x.classList.add('ok')});
+if(!ok)b.classList.add('no');
+if(ok){P[cur].sc+=T.p;confetti();beep(880,.25);setTimeout(()=>beep(1100,.25),150)}else beep(180,.35,'square');
+const fb=$('fb');fb.style.display='block';
+fb.innerHTML=(ok?`🎉 <b>Hebat! Kamu dapat ${T.p} bintang ⭐</b>`:'😅 <b>Belum tepat, tidak apa-apa!</b>')+'<br>💡 '+q[3];
+$('nx').style.display='block';
+$('nx').onclick=()=>{$('cardov').classList.remove('show');next();};});}
+function next(){cur=(cur+1)%P.length;busy=false;$('roll').disabled=false;draw();say('Giliran '+P[cur].n+' '+P[cur].a+'. Ayo lempar dadu!');}
+function finish(){
+const r=[...P].sort((a,b)=>b.sc-a.sc);confetti();setTimeout(confetti,1200);[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.25),i*180));
+$('end').style.borderColor='#f59e0b';
+$('end').innerHTML=`<div class="big">🏆</div><h2 style="background:#f59e0b;justify-content:center">Permainan Selesai!</h2><p style="text-align:center;font-size:1.3rem"><b>${r[0].a} ${r[0].n}</b> jadi Detektif Gizi Juara!</p><div class="rank">`+
+r.map((p,i)=>`<div><span>${['🥇','🥈','🥉','🏅'][i]} ${p.a} ${p.n}</span><b>⭐ ${p.sc}</b></div>`).join('')+
+`</div><p>Ingat ya: makan sayur dan buah, minum air putih, dan kurangi jajanan manis! 🥦💧</p><button onclick="location.reload()" style="width:100%">🔄 Main Lagi</button>`;
+$('endov').classList.add('show');}
+</script>
+</body>
+</html>
